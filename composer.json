@@ -10,6 +10,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.0",
+        "mckenziearts/laravel-oauth": "^1.0",
         "predis/predis": "^1.1"
     },
     "require-dev": {
@@ -36,6 +37,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
+
             ]
         }
     },

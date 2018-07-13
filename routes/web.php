@@ -16,3 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('export', 'ExportController@export')->name('export');
+
+Auth::routes();
+
+Route::get('/auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('/callback/{provider}', 'Auth\LoginController@handleProviderCallback');
+
+
+Route::get('/home', 'HomeController@index')->name('home');
