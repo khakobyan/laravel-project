@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('export', 'ExportController@export')->name('export');
+
+Route::post('/charge', 'CheckoutController@charge');
