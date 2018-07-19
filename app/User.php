@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\LinkedSocialAccount;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -32,8 +31,4 @@ class User extends Authenticatable
         'password', 'remember_token', 'activation_token',
     ];
 
-    public function linkedSocialAccounts()
-    {
-        return $this->hasMany(LinkedSocialAccount::class);
-    }
 }
