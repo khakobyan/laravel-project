@@ -52,4 +52,22 @@ $app->singleton(
 |
 */
 
+$app->bind(
+    App\Sections\Auth\Contracts\IPostService::class,
+    App\Sections\Auth\Services\PostService::class
+);
+$app->bind(
+    'api.services.auth',
+    App\Sections\Auth\Contracts\IPostService::class
+);
+
+$app->bind(
+    App\Sections\Posts\Contracts\IPostService::class,
+    App\Sections\Posts\Services\PostService::class
+);
+$app->bind(
+    'api.services.posts',
+    App\Sections\Posts\Contracts\IPostService::class
+);
+
 return $app;
