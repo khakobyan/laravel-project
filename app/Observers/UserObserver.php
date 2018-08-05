@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\User;
+use App\Models\User;
 use Webpatser\Uuid\Uuid;
 
 class UserObserver
@@ -10,7 +10,7 @@ class UserObserver
     /**
      * Handle the user "created" event.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return void
      */
     public function creating(User $user)
@@ -21,7 +21,7 @@ class UserObserver
     /**
      * Handle the user "updated" event.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return void
      */
     public function saving(User $user)

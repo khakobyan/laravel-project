@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\SignupActivate;
 use Carbon\Carbon;
-use App\User;
+use App\Models\User;
 
 class AuthController extends Controller
 {

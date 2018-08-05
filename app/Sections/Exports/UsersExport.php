@@ -2,7 +2,7 @@
 
 namespace App\Sections\Exports;
  
-use App\User;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
