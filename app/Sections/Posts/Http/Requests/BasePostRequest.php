@@ -2,9 +2,13 @@
 
 namespace App\Sections\Posts\Http\Requests;
 
-use App\Http\Requests\Contracts\IHasCountInput;
+use App\Http\Requests\Contracts\{
+    IHasCountInput,
+    IHasRelationsInput
+};
 use App\Http\Requests\Request;
 use Illuminate\Support\Arr;
+use App\Models\Post;
 
 abstract class BasePostRequest extends Request implements IHasCountInput
 {
@@ -48,5 +52,23 @@ abstract class BasePostRequest extends Request implements IHasCountInput
     {
         $count = (int) Arr::get($this->query(), 'count', 30);
         return $count > 0 ? $count : 30;
+    }
+
+    /**
+     * Request should have in query param relations field, for retreive resource relations, if it no present we should retreive default value.
+     *
+     * @return array
+     */
+    public function getRelationsInput()
+    {
+        $relations = (array) $this->input('relations', []);
+        $post_relations = Post::$relationships;
+        $result = [];
+        foreach ($relations as $value) {
+            if (in_array($value, $post_relations)) {
+                $result[] = $value;
+            }
+        }
+        return $result;
     }
 }

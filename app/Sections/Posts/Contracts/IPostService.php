@@ -13,38 +13,38 @@ interface IPostService
      */
     public function getAll($count = 30);
 
-    // /**
-    //  * Create new tag.
-    //  *
-    //  * @param array $inputs
-    //  *
-    //  * @return \App\ModelsV2\Sites\Tag
-    //  */
-    // public function create($inputs);
+    /**
+     * Create new post.
+     *
+     * @param array $inputs
+     *
+     * @return \App\Models\Post
+     */
+    public function create($inputs);
 
-    // /**
-    //  * Update tag.
-    //  *
-    //  * @param string $id
-    //  * @param array  $inputs
-    //  *
-    //  * @return bool
-    //  */
-    // public function update($id, $inputs);
+    /**
+     * Update post.
+     *
+     * @param string $id
+     * @param array  $inputs
+     *
+     * @return bool
+     */
+    public function update($id, $inputs);
 
-    // /**
-    //  * Destroy tag from storage.
-    //  *
-    //  * @param string $id
-    //  *
-    //  * @return bool
-    //  */
-    // public function destroy($id);
+    /**
+     * Destroy post from storage.
+     *
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function destroy($id);
 
-    // /**
-    //  * Abort(404) if video collection not exist.
-    //  *
-    //  * @param string $id
-    //  */
-    // public function abortIfNotExist($id);
+    /**
+     * Abort(404) if post not exist.
+     *
+     * @param string $id
+     */
+    public function abortIfNotExist($id);
 }
