@@ -8,6 +8,10 @@ class Post extends Model
 {
     protected $table = 'posts';
 
+    public static $relationships = [
+        'user',
+    ];
+
     protected $fillable = [
         'text',
         'image',
@@ -15,4 +19,6 @@ class Post extends Model
         'category_id',
         'related_data'
     ];
+
+    public function user() { return $this->belongsTo(User::class); }
 }

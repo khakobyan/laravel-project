@@ -4,6 +4,7 @@ namespace App\Sections\Posts\Services;
 
 use App\Sections\Posts\Contracts\IPostService;
 use App\Models\Post;
+use Auth;
 
 class PostService implements IPostService
 {
@@ -14,65 +15,91 @@ class PostService implements IPostService
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAll($count = 30)
+    public function getAll($count = 30, $relations = [])
     {
-        return Post::orderBy('id')->paginate($count);
+        $query = Post::query();
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+        return $query->orderBy('id')->paginate($count);
     }
 
-    // /**
-    //  * Create new tag.
-    //  *
-    //  * @param array $inputs
-    //  *
-    //  * @return \App\ModelsV2\Sites\Tag
-    //  */
-    // public function create($inputs)
-    // {
-    //     return Tag::firstOrCreate($inputs);
-    // }
+    /**
+     * Create new post.
+     *
+     * @param array $inputs
+     *
+     * @return \App\Models\Post
+     */
+    public function create($inputs)
+    {
+        $inputs['user_id'] = Auth::id();
+        // $res = Post::with('user')->where('id', $post->id)->first();
+        return  $post = Post::create($inputs); 
+    }
 
-    // /**
-    //  * Update tag.
-    //  *
-    //  * @param string $id
-    //  * @param array  $inputs
-    //  *
-    //  * @return bool
-    //  */
-    // public function update($id, $inputs)
-    // {
-    //     $row = Tag::find($id);
-    //     if ($row) {
-    //         return $row->update($inputs);
-    //     }
-    //     return false;
-    // }
+    /**
+     * Get post from storage.
+     *
+     * @param string $id
+     * @param array  $relations
+     *
+     * @return \App\Models\Post
+     */
+    public function get($id, $relations = [])
+    {
+        $query = Post::where('id', $id);
+        if (!empty($relations)) {
+            $query = $query->with($relations);
+        }
+        return $query->first();
+    }
 
-    // /**
-    //  * Destroy tag from storage.
-    //  *
-    //  * @param string $id
-    //  *
-    //  * @return bool
-    //  */
-    // public function destroy($id)
-    // {
-    //     $row = Tag::find($id);
-    //     if ($row) {
-    //         return $row->delete();
-    //     }
-    //     return false;
-    // }
+    /**
+     * Update post.
+     *
+     * @param string $id
+     * @param array  $inputs
+     *
+     * @return bool
+     */
+    public function update($id, $inputs)
+    {
+        $post = Post::find($id);
+        $inputs['user_id'] = Auth::id();
+        if ($post && $post->user_id == $inputs['user_id']) {
+            return $post->update($inputs);
+        }
+        return false;
+    }
 
-    // /**
-    //  * Abort(404) if tag not exist.
-    //  *
-    //  * @param string $id
-    //  */
-    // public function abortIfNotExist($id)
-    // {
-    //     if (!Tag::where('id', $id)->exists()) {
-    //         abort(404, 'Not found');
-    //     }
-    // }
+    /**
+     * Destroy post from storage.
+     *
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        $inputs['user_id'] = Auth::id();
+        if ($post && $post->user_id == $inputs['user_id']) {
+            return $post->delete();
+        }
+        return false;
+    }
+
+    /**
+     * Abort(404) if post not exist.
+     *
+     * @param string $id
+     */
+    public function abortIfNotExist($id)
+    {
+        $user_id = Auth::id();
+        if (!Post::where('id', $id)->exists()) {
+            abort(404, 'Not found');
+        }
+    }
 }

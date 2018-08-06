@@ -2,18 +2,23 @@
 
 namespace App\Sections\Posts\Http\Controllers;
 
-use App\Sections\Posts\Http\Requests\PostIndexRequest;
-// use Ams\Api\V2\Tags\Http\Requests\TagRequest;
-// use Ams\Api\V2\Tags\Http\Responses\TagIndexResponse;
-// use Ams\Api\V2\Tags\Http\Responses\TagResponse;
+use App\Sections\Posts\Http\Requests\{
+    PostIndexRequest,
+    PostRequest,
+    PostShowRequest
+};
+use App\Sections\Posts\Http\Responses\{
+    PostIndexResponse,
+    PostResponse
+};
 use App\Http\Controllers\Controller;
 
 class PostsController extends Controller
 {
     /**
-     * Display a listing of the tags.
+     * Display a listing of the posts.
      *
-     * @param \Ams\Api\V2\Tags\Http\Requests\PostIndexRequest $request
+     * @param App\Sections\Posts\Http\Requests\PostIndexRequest $request
      *
      * @return \Illuminate\Contracts\Support\Responsable
      */
@@ -21,45 +26,62 @@ class PostsController extends Controller
     {
         $postService = app('api.services.posts');
         $count = $request->getCountInput();
-        $posts = $postService->getAll($count);
-        return $posts;
-        // return new TagIndexResponse($tags);
+        $relations = $request->getRelationsInput();
+        $posts = $postService->getAll($count, $relations);
+       
+        return new PostIndexResponse($posts);
     }
 
     /**
-     * Store a newly created tag in storage.
+     * Store a newly created post in storage.
      *
-     * @param \Ams\Api\V2\Tags\Http\Requests\TagRequest $request
+     * @param \App\Sections\Posts\Http\Requests\PostRequest $request
      *
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    public function store(TagRequest $request)
+    public function store(PostRequest $request)
     {
-        $tagService = app('api.services.tags');
+        $postService = app('api.services.posts');
         $inputs = $request->inputs();
-        $tag = $tagService->create($inputs);
-        return new TagResponse($tag, 201);
+        $post = $postService->create($inputs);
+        return new PostResponse($post, 201);
     }
 
     /**
-     * Update the specified tag in storage.
+     * Get post from storage.
      *
-     * @param \Ams\Api\V2\Tags\Http\Requests\TagRequest $request
-     * @param string                                    $id
+     * @param \App\Sections\Posts\Http\Requests\PostShowRequest $request
+     *
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    public function show(PostShowRequest $request, $id)
+    {
+        $postService = app('api.services.posts');
+        $relations = $request->getRelationsInput();
+        $postService->abortIfNotExist($id);
+        $post = $postService->get($id, $relations);
+        return new PostResponse($post);
+    }
+
+    /**
+     * Update the specified post in storage.
+     *
+     * @param \App\Sections\Posts\Http\Requests\PostRequest $request
+     * @param string $id
      *
      * @return Response
      */
-    public function update(TagRequest $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $tagService = app('api.services.tags');
-        $tagService->abortIfNotExist($id);
+        $postService = app('api.services.posts');
+        $postService->abortIfNotExist($id);
         $inputs = $request->inputs();
-        $tag = $tagService->update($id, $inputs);
+        $postService->update($id, $inputs);
         return response()->json(null, 204);
     }
 
     /**
-     * Remove the specified tag from storage.
+     * Remove the specified post from storage.
      *
      * @param string $id
      *
@@ -67,9 +89,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $tagService = app('api.services.tags');
-        $tagService->abortIfNotExist($id);
-        $tagService->destroy($id);
+        $postService = app('api.services.posts');
+        $postService->abortIfNotExist($id);
+        $postService->destroy($id);
         return response()->json(null, 204);
     }
 }
