@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests;
+namespace App\Sections\Posts\Http\Requests\PostComments;
 
 use App\Http\Requests\Request;
-use Auth;
+// use Illuminate\Http\Request;
 
-class PostRequest extends Request
+class PostCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class PostRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'string',
+            'text' => 'required|string',
+            'post_id' => 'required|int'
         ];
     }
     

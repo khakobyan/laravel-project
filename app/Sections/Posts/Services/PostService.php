@@ -35,7 +35,7 @@ class PostService implements IPostService
     {
         $inputs['user_id'] = Auth::id();
         // $res = Post::with('user')->where('id', $post->id)->first();
-        return  $post = Post::create($inputs); 
+        return Post::create($inputs); 
     }
 
     /**
@@ -97,7 +97,6 @@ class PostService implements IPostService
      */
     public function abortIfNotExist($id)
     {
-        $user_id = Auth::id();
         if (!Post::where('id', $id)->exists()) {
             abort(404, 'Not found');
         }

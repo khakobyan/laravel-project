@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests;
+namespace App\Sections\Posts\Http\Requests\Posts;
 
 use App\Http\Requests\Contracts\{
     IHasCountInput,

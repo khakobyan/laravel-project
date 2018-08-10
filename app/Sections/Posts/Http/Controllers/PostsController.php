@@ -2,12 +2,12 @@
 
 namespace App\Sections\Posts\Http\Controllers;
 
-use App\Sections\Posts\Http\Requests\{
+use App\Sections\Posts\Http\Requests\Posts\{
     PostIndexRequest,
     PostRequest,
     PostShowRequest
 };
-use App\Sections\Posts\Http\Responses\{
+use App\Sections\Posts\Http\Responses\Posts\{
     PostIndexResponse,
     PostResponse
 };
@@ -18,7 +18,7 @@ class PostsController extends Controller
     /**
      * Display a listing of the posts.
      *
-     * @param App\Sections\Posts\Http\Requests\PostIndexRequest $request
+     * @param App\Sections\Posts\Http\Requests\Posts\PostIndexRequest $request
      *
      * @return \Illuminate\Contracts\Support\Responsable
      */
@@ -35,7 +35,7 @@ class PostsController extends Controller
     /**
      * Store a newly created post in storage.
      *
-     * @param \App\Sections\Posts\Http\Requests\PostRequest $request
+     * @param \App\Sections\Posts\Http\Requests\Posts\PostRequest $request
      *
      * @return \Illuminate\Contracts\Support\Responsable
      */
@@ -50,7 +50,7 @@ class PostsController extends Controller
     /**
      * Get post from storage.
      *
-     * @param \App\Sections\Posts\Http\Requests\PostShowRequest $request
+     * @param \App\Sections\Posts\Http\Requests\Posts\PostShowRequest $request
      *
      * @return \Illuminate\Contracts\Support\Responsable
      */
@@ -66,7 +66,7 @@ class PostsController extends Controller
     /**
      * Update the specified post in storage.
      *
-     * @param \App\Sections\Posts\Http\Requests\PostRequest $request
+     * @param \App\Sections\Posts\Http\Requests\Posts\PostRequest $request
      * @param string $id
      *
      * @return Response
