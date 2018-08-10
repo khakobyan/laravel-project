@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sections\Posts\Http\Responses;
+namespace App\Sections\Posts\Http\Responses\Posts;
 
 class PostIndexResponse extends BasePostResponse
 {

@@ -70,4 +70,13 @@ $app->bind(
     App\Sections\Posts\Contracts\IPostService::class
 );
 
+$app->bind(
+    App\Sections\Posts\Contracts\IPostCommentService::class,
+    App\Sections\Posts\Services\PostCommentService::class
+);
+$app->bind(
+    'api.services.post-comments',
+    App\Sections\Posts\Contracts\IPostCommentService::class
+);
+
 return $app;

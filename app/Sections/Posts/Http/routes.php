@@ -10,4 +10,10 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
         Route::delete('{id}', 'PostsController@destroy');
         /* posts resource end */
     });
+    
+    Route::group(['prefix' => 'post-comments'], function () {
+        Route::post('/', 'PostCommentsController@store');
+        Route::put('{id}', 'PostCommentsController@update');
+        Route::delete('{id}', 'PostCommentsController@destroy');
+    });
 });

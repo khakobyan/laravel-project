@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Responses;
+namespace App\Sections\Posts\Http\Responses\PostComments;
 
-class PostResponse extends BasePostResponse
+use App\Http\Responses\BaseResponse;
+
+class PostCommentResponse extends BaseResponse
 {
     public function __construct($data, $status = 200)
     {
@@ -12,6 +14,6 @@ class PostResponse extends BasePostResponse
 
     protected function prepare()
     {
-        return $this->formatSinglePost($this->data);
+        return $this->data;
     }
 }
