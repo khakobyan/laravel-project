@@ -8,10 +8,11 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cog\Contracts\Love\Liker\Models\Liker as LikerContract;
 use Cog\Laravel\Love\Liker\Models\Traits\Liker;
+use Hootlex\Friendships\Traits\Friendable;
 
 class User extends Authenticatable implements LikerContract
 {
-    use Notifiable, HasApiTokens, SoftDeletes, Liker;
+    use Notifiable, HasApiTokens, SoftDeletes, Liker, Friendable;
 
     protected $dates = ['deleted_at'];
 
