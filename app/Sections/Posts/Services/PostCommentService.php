@@ -3,7 +3,10 @@
 namespace App\Sections\Posts\Services;
 
 use App\Sections\Posts\Contracts\IPostCommentService;
-use App\Models\PostComment;
+use App\Models\{
+    PostComment,
+    User
+};
 use Auth;
 
 class PostCommentService implements IPostCommentService
@@ -52,6 +55,36 @@ class PostCommentService implements IPostCommentService
         $inputs['user_id'] = Auth::id();
         if ($postComment && $postComment->user_id == $inputs['user_id']) {
             return $postComment->delete();
+        }
+        return false;
+    }
+
+    /**
+     * Like or Dislike the post comment.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function createReaction($inputs)
+    {
+        $user = User::where('id', Auth::id())->first();
+        $postComment = PostComment::where('id', $inputs['id'])->first();
+        if ($postComment && $user) {
+            switch ($inputs['reaction']) {
+                case 'like':
+                    $user->like($postComment);
+                    break;
+                case 'dislike':
+                    $user->dislike($postComment);
+                    break;
+                case 'unlike':
+                    $user->unlike($postComment);
+                    break;
+                case 'undislike':
+                    $user->undislike($postComment);
+                    break;
+            }
         }
         return false;
     }
