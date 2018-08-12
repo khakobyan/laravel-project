@@ -3,7 +3,8 @@
 namespace App\Sections\Posts\Http\Controllers;
 
 use App\Sections\Posts\Http\Requests\PostComments\{
-    PostCommentRequest
+    PostCommentRequest,
+    PostCommentLikeableRequest
 };
 use App\Sections\Posts\Http\Responses\PostComments\{
     PostCommentResponse
@@ -57,6 +58,21 @@ class PostCommentsController extends Controller
         $postCommentService = app('api.services.post-comments');
         $postCommentService->abortIfNotExist($id);
         $postCommentService->destroy($id);
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Like or dislike the post.
+     *
+     * @param \App\Sections\Posts\Http\Requests\Posts\PostCommentLikeableRequest $request
+     *
+     * @return Response
+     */
+    public function addReaction(PostCommentLikeableRequest $request)
+    {
+        $postCommentService = app('api.services.post-comments');
+        $inputs = $request->inputs();
+        $postCommentService->createReaction($inputs);
         return response()->json(null, 204);
     }
 }

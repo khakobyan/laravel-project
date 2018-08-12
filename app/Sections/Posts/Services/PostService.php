@@ -3,7 +3,10 @@
 namespace App\Sections\Posts\Services;
 
 use App\Sections\Posts\Contracts\IPostService;
-use App\Models\Post;
+use App\Models\{
+    Post,
+    User
+};
 use Auth;
 
 class PostService implements IPostService
@@ -86,6 +89,36 @@ class PostService implements IPostService
         $inputs['user_id'] = Auth::id();
         if ($post && $post->user_id == $inputs['user_id']) {
             return $post->delete();
+        }
+        return false;
+    }
+
+    /**
+     * Like or Dislike the post.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function createReaction($inputs)
+    {
+        $user = User::where('id', Auth::id())->first();
+        $post = Post::where('id', $inputs['id'])->first();
+        if ($post && $user) {
+            switch ($inputs['reaction']) {
+                case 'like':
+                    $user->like($post);
+                    break;
+                case 'dislike':
+                    $user->dislike($post);
+                    break;
+                case 'unlike':
+                    $user->unlike($post);
+                    break;
+                case 'undislike':
+                    $user->undislike($post);
+                    break;
+            }
         }
         return false;
     }

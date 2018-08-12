@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
+use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
 
-class PostComment extends Model
+class PostComment extends Model implements LikeableContract
 {
+    use Likeable;
+
     protected $table = 'post_comments';
 
     public static $relationships = [
