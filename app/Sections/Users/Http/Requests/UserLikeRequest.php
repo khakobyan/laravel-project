@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests\PostComments;
+namespace App\Sections\Users\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PostCommentLikeableRequest extends Request
+class UserLikeRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class PostCommentLikeableRequest extends Request
     {
         return [
             'reaction' => 'required|string|in:like,dislike,unlike,undislike',
-            'id' => 'required|int'
+            'id' => 'required|int',
+            'type' => 'required|string|in:post,post-comment',
         ];
     }
     

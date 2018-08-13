@@ -42,15 +42,6 @@ interface IPostService
     public function destroy($id);
 
     /**
-     * Like or Dislike the post.
-     *
-     * @param array $inputs
-     *
-     * @return bool
-     */
-    public function createReaction($inputs);
-
-    /**
      * Abort(404) if post not exist.
      *
      * @param string $id

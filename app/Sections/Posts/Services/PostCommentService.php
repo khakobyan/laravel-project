@@ -60,36 +60,6 @@ class PostCommentService implements IPostCommentService
     }
 
     /**
-     * Like or Dislike the post comment.
-     *
-     * @param array $inputs
-     *
-     * @return bool
-     */
-    public function createReaction($inputs)
-    {
-        $user = User::where('id', Auth::id())->first();
-        $postComment = PostComment::where('id', $inputs['id'])->first();
-        if ($postComment && $user) {
-            switch ($inputs['reaction']) {
-                case 'like':
-                    $user->like($postComment);
-                    break;
-                case 'dislike':
-                    $user->dislike($postComment);
-                    break;
-                case 'unlike':
-                    $user->unlike($postComment);
-                    break;
-                case 'undislike':
-                    $user->undislike($postComment);
-                    break;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Abort(404) if post comment not exist.
      *
      * @param string $id

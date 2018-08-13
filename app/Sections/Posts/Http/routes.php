@@ -9,7 +9,6 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
         Route::put('{id}', 'PostsController@update');
         Route::delete('{id}', 'PostsController@destroy');
         /* posts resource end */
-        Route::post('reaction', 'PostsController@addReaction');
     });
     
     Route::group(['prefix' => 'post-comments'], function () {
@@ -18,6 +17,5 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
         Route::put('{id}', 'PostCommentsController@update');
         Route::delete('{id}', 'PostCommentsController@destroy');
         /* post comments resource end */
-        Route::post('reaction', 'PostCommentsController@addReaction');
     });
 });

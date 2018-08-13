@@ -79,4 +79,13 @@ $app->bind(
     App\Sections\Posts\Contracts\IPostCommentService::class
 );
 
+$app->bind(
+    App\Sections\Users\Contracts\IUserService::class,
+    App\Sections\Users\Services\UserService::class
+);
+$app->bind(
+    'api.services.users',
+    App\Sections\Users\Contracts\IUserService::class
+);
+
 return $app;

@@ -5,8 +5,7 @@ namespace App\Sections\Posts\Http\Controllers;
 use App\Sections\Posts\Http\Requests\Posts\{
     PostIndexRequest,
     PostRequest,
-    PostShowRequest,
-    PostLikeableRequest
+    PostShowRequest
 };
 use App\Sections\Posts\Http\Responses\Posts\{
     PostIndexResponse,
@@ -93,21 +92,6 @@ class PostsController extends Controller
         $postService = app('api.services.posts');
         $postService->abortIfNotExist($id);
         $postService->destroy($id);
-        return response()->json(null, 204);
-    }
-
-    /**
-     * Like or dislike the post.
-     *
-     * @param \App\Sections\Posts\Http\Requests\Posts\PostLikeableRequest $request
-     *
-     * @return Response
-     */
-    public function addReaction(PostLikeableRequest $request)
-    {
-        $postService = app('api.services.posts');
-        $inputs = $request->inputs();
-        $postService->createReaction($inputs);
         return response()->json(null, 204);
     }
 }

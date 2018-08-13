@@ -163,6 +163,7 @@ return [
         //sections providers
         App\Sections\Auth\Providers\RouteServiceProvider::class,
         App\Sections\Posts\Providers\RouteServiceProvider::class,
+        App\Sections\Users\Providers\RouteServiceProvider::class,
 
     ],
 
