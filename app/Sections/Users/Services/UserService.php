@@ -5,6 +5,7 @@ namespace App\Sections\Users\Services;
 use App\Sections\Users\Contracts\IUserService;
 use App\Models\{
     Post,
+    PostComment,
     User
 };
 use Auth;
@@ -23,6 +24,11 @@ class UserService implements IUserService
         return $query->orderBy('id')->paginate(7);
     }
 
+    private function getAuthUser()
+    {
+        return User::where('id', Auth::id())->first();
+    }
+
     /**
      * Like or Dislike by user.
      *
@@ -32,7 +38,8 @@ class UserService implements IUserService
      */
     public function createReaction($inputs)
     {
-        $user = User::where('id', Auth::id())->first();
+        $user = $this->getAuthUser();
+
         switch ($inputs['type']) {
             case 'post':
                 $item = Post::where('id', $inputs['id'])->first();
@@ -41,21 +48,99 @@ class UserService implements IUserService
                 $item = PostComment::where('id', $inputs['id'])->first();
                 break;
         }
+
         if ($item && $user) {
             switch ($inputs['reaction']) {
+                //Like item
                 case 'like':
                     $user->like($item);
                     break;
+                //Dislike item                    
                 case 'dislike':
                     $user->dislike($item);
                     break;
+                //Cancell like    
                 case 'unlike':
                     $user->unlike($item);
                     break;
+                //Cancell dislike    
                 case 'undislike':
                     $user->undislike($item);
                     break;
             }
+        }
+        return false;
+    }
+
+    /**
+     * Add,delete, accept, block friends.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function addFriends($inputs)
+    {
+        $user = $this->getAuthUser();
+        $other_user = User::where('id', $inputs['id'])->first();
+        // dd($user->id, $other_user->id);
+        if ($other_user && $user) {
+            switch ($inputs['request_type']) {
+                //Send a Friend Request
+                case 'befriend':
+                    $user->befriend($other_user);
+                    break;
+                //Accept a Friend Request     
+                case 'accept':
+                    $user->acceptFriendRequest($other_user);
+                    break;
+                //Deny a Friend Request
+                case 'deny':
+                    $user->denyFriendRequest($other_user);
+                    break;
+                //Remove Friend
+                case 'unfriend':
+                    $user->unfriend($other_user);
+                    break;
+                //Block a Model
+                case 'block':
+                    $user->blockFriend($other_user);
+                    break;
+                //Unblock a Model
+                case 'unblock':
+                    $user->unblockFriend($other_user);
+                    break; 
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add/delete friend to/from group.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function addToGroup($inputs)
+    {
+        $user = $this->getAuthUser();
+        $friend = User::where('id', $inputs['id'])->first();
+        
+        if ($user->isFriendWith($friend) && ($friend && $user) && array_key_exists('group_name', $inputs)) {
+            switch ($inputs['request_type']) {
+                //Group a Friend
+                case 'group':
+                    $user->groupFriend($friend, $inputs['group_name']);
+                    break;
+                //Remove a Friend from a group
+                case 'ungroup':
+                    $user->ungroupFriend($friend, $inputs['group_name']);
+                    break;
+            }
+        } elseif ($user->isFriendWith($friend) && ($friend && $user) && $inputs['request_type'] === 'ungroup_from_all'){
+            //Remove a Friend from all groups 
+            $user->ungroupFriend($friend);
         }
         return false;
     }

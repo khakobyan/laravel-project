@@ -3,11 +3,10 @@
 namespace App\Sections\Users\Http\Controllers;
 
 use App\Sections\Users\Http\Requests\{
-    UserLikeRequest
+    UserLikeRequest,
+    UserFriendRequest,
+    UserFriendGroupRequest
 };
-// use App\Sections\Users\Http\Responses\{
-    
-// };
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
@@ -37,6 +36,36 @@ class UsersController extends Controller
         $userService = app('api.services.users');
         $inputs = $request->inputs();
         $userService->createReaction($inputs);
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Add friends
+     *
+     * @param \App\Sections\Users\Http\Requests\UserFriendRequest $request
+     *
+     * @return Response
+     */
+    public function addFriend(UserFriendRequest $request)
+    {
+        $userService = app('api.services.users');
+        $inputs = $request->inputs();
+        $userService->addFriends($inputs);
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Add friend to specific group
+     *
+     * @param \App\Sections\Users\Http\Requests\UserFriendGroupRequest $request
+     *
+     * @return Response
+     */
+    public function addFriendToGroup(UserFriendGroupRequest $request)
+    {
+        $userService = app('api.services.users');
+        $inputs = $request->inputs();
+        $userService->addToGroup($inputs);
         return response()->json(null, 204);
     }
 

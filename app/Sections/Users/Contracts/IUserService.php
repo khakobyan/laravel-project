@@ -20,4 +20,22 @@ interface IUserService
      * @return bool
      */
     public function createReaction($inputs);
+
+    /**
+     * Add,delete, accept, block friends.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function addFriends($inputs);
+
+    /**
+     * Add/delete friend to/from group.
+     *
+     * @param array $inputs
+     *
+     * @return bool
+     */
+    public function addToGroup($inputs);
 }

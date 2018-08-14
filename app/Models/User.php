@@ -18,7 +18,7 @@ class User extends Authenticatable implements LikerContract
 
     protected $relationships = [
         'posts',
-        'comments'
+        'comments',
     ];
 
     /**
@@ -41,7 +41,9 @@ class User extends Authenticatable implements LikerContract
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'activation_token',
+        'password', 
+        'remember_token', 
+        'activation_token',
     ];
 
     public function posts() { return $this->hasMany(Post::class); }

@@ -5,6 +5,8 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
         /* posts resource start */
         Route::get('/', 'UsersController@index');
         /* posts resource end */
-        Route::post('reaction', 'UsersController@addReaction');
+        Route::post('reactions', 'UsersController@addReaction');
+        Route::post('friends', 'UsersController@addFriend');
+        Route::post('friend-groups', 'UsersController@addFriendToGroup');
     });
 });
