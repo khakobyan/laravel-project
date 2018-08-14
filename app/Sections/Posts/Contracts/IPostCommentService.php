@@ -33,15 +33,6 @@ interface IPostCommentService
     public function destroy($id);
 
     /**
-     * Like or Dislike the post comment.
-     *
-     * @param array $inputs
-     *
-     * @return bool
-     */
-    public function createReaction($inputs);
-
-    /**
      * Abort(404) if post comment not exist.
      *
      * @param string $id

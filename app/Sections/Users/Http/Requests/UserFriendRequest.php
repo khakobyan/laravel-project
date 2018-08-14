@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests\PostComments;
+namespace App\Sections\Users\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PostCommentLikeableRequest extends Request
+class UserFriendRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class PostCommentLikeableRequest extends Request
     public function rules()
     {
         return [
-            'reaction' => 'required|string|in:like,dislike,unlike,undislike',
-            'id' => 'required|int'
+            'request_type' => 'required|string|in:befriend,accept,deny,unfriend,block,unblock,',
+            'id' => 'required|string',
         ];
     }
     

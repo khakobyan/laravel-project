@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests\Posts;
+namespace App\Sections\Users\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PostLikeableRequest extends Request
+class UserFriendGroupRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class PostLikeableRequest extends Request
     public function rules()
     {
         return [
-            'reaction' => 'required|string|in:like,dislike,unlike,undislike',
-            'id' => 'required|int'
+            'request_type' => 'required|string|in:group,ungroup,ungroup_from_all',
+            'group_name' => 'string|in:acquaintances,close_friends,family,work',
+            'id' => 'required|string',
         ];
     }
     

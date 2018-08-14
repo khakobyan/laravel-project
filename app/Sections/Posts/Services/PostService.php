@@ -94,36 +94,6 @@ class PostService implements IPostService
     }
 
     /**
-     * Like or Dislike the post.
-     *
-     * @param array $inputs
-     *
-     * @return bool
-     */
-    public function createReaction($inputs)
-    {
-        $user = User::where('id', Auth::id())->first();
-        $post = Post::where('id', $inputs['id'])->first();
-        if ($post && $user) {
-            switch ($inputs['reaction']) {
-                case 'like':
-                    $user->like($post);
-                    break;
-                case 'dislike':
-                    $user->dislike($post);
-                    break;
-                case 'unlike':
-                    $user->unlike($post);
-                    break;
-                case 'undislike':
-                    $user->undislike($post);
-                    break;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Abort(404) if post not exist.
      *
      * @param string $id
