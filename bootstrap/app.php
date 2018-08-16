@@ -53,12 +53,12 @@ $app->singleton(
 */
 
 $app->bind(
-    App\Sections\Auth\Contracts\IPostService::class,
-    App\Sections\Auth\Services\PostService::class
+    App\Sections\Auth\Contracts\IAuthService::class,
+    App\Sections\Auth\Services\AuthService::class
 );
 $app->bind(
     'api.services.auth',
-    App\Sections\Auth\Contracts\IPostService::class
+    App\Sections\Auth\Contracts\IAuthService::class
 );
 
 $app->bind(
