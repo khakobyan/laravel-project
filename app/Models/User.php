@@ -19,6 +19,7 @@ class User extends Authenticatable implements LikerContract
     protected $relationships = [
         'posts',
         'comments',
+        'products',
     ];
 
     /**
@@ -48,5 +49,6 @@ class User extends Authenticatable implements LikerContract
 
     public function posts() { return $this->hasMany(Post::class); }
     public function comments() { return $this->hasMany(PostComment::class); }
+    public function products() { return $this->hasMany(Product::class); }
 
 }

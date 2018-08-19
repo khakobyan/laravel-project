@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\{
     User,
     Post,
-    PostComment
+    PostComment,
+    Product
 };
 
 class UsersTableSeeder extends Seeder
@@ -24,6 +25,8 @@ class UsersTableSeeder extends Seeder
                 $user->posts()->saveMany($posts);
                 $postComments = factory(PostComment::class, rand(1, 4))->make();
                 $user->comments()->saveMany($postComments);
+                $products = factory(Product::class, rand(1, 3))->make();
+                $user->products()->saveMany($products);
             });
             DB::commit();
         } catch (\Exception $e) {

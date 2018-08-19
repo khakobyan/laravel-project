@@ -87,5 +87,21 @@ $app->bind(
     'api.services.users',
     App\Sections\Users\Contracts\IUserService::class
 );
+$app->bind(
+    App\Sections\Trade\Contracts\IProductService::class,
+    App\Sections\Trade\Services\ProductService::class
+);
+$app->bind(
+    'api.services.products',
+    App\Sections\Trade\Contracts\IProductService::class
+);
+$app->bind(
+    App\Sections\Trade\Contracts\IProductCommentService::class,
+    App\Sections\Trade\Services\ProductCommentService::class
+);
+$app->bind(
+    'api.services.product-comments',
+    App\Sections\Trade\Contracts\IProductCommentService::class
+);
 
 return $app;

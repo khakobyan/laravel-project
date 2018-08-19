@@ -164,7 +164,8 @@ return [
         App\Sections\Auth\Providers\RouteServiceProvider::class,
         App\Sections\Posts\Providers\RouteServiceProvider::class,
         App\Sections\Users\Providers\RouteServiceProvider::class,
-
+        App\Sections\Trade\Providers\RouteServiceProvider::class,
+        
     ],
 
     /*
