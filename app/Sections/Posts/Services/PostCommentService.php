@@ -5,7 +5,7 @@ namespace App\Sections\Posts\Services;
 use App\Sections\Posts\Contracts\IPostCommentService;
 use App\Models\{
     PostComment,
-    User
+    Post
 };
 use Auth;
 
@@ -20,7 +20,7 @@ class PostCommentService implements IPostCommentService
      */
     public function create($inputs)
     {
-        $inputs['user_id'] = Auth::id();
+        Post::findOrFail($inputs['post_id']);
         return PostComment::create($inputs); 
     }
 
@@ -35,8 +35,7 @@ class PostCommentService implements IPostCommentService
     public function update($id, $inputs)
     {
         $postComment = PostComment::find($id);
-        $inputs['user_id'] = Auth::id();
-        if ($postComment && $postComment->user_id == $inputs['user_id']) {
+        if ($postComment && $postComment->user_id == Auth::id()) {
             return $postComment->update($inputs);
         }
         return false;
@@ -52,8 +51,7 @@ class PostCommentService implements IPostCommentService
     public function destroy($id)
     {
         $postComment = PostComment::find($id);
-        $inputs['user_id'] = Auth::id();
-        if ($postComment && $postComment->user_id == $inputs['user_id']) {
+        if ($postComment && $postComment->user_id == Auth::id()) {
             return $postComment->delete();
         }
         return false;

@@ -7,7 +7,7 @@ use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
 use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
 
 
-class Product extends Model
+class Product extends Model implements LikeableContract
 {
     use Likeable;
 
@@ -15,7 +15,12 @@ class Product extends Model
 
     public static $relationships = [
         'user',
-        'comments'
+        'comments',
+    ];
+
+    protected $appends = [
+        'reaction_counts',
+        // 'reacted_users',
     ];
 
     protected $fillable = [
@@ -25,13 +30,29 @@ class Product extends Model
         'description',
         'related_data',
         'price',
+        'currency',
     ];
 
     public function user() { return $this->belongsTo(User::class); }
     public function comments() { return $this->hasMany(ProductComment::class); }
 
-    public function getReactionsCount()
+    public function getReactedUsersAttribute()
     {
-        return $this->likesCount;
+        $users = [
+            'liked_users' => $this->likes,
+            'disliked_users' => $this->dislikes,
+        ];
+
+        return $users;
+    }
+
+    public function getReactionCountsAttribute()
+    {
+        $counts = [
+            'likes' => $this->likesCount,
+            'dislikes' => $this->dislikesCount, 
+        ];
+        
+        return $counts;
     }
 }

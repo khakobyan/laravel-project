@@ -62,10 +62,10 @@ abstract class BaseProductRequest extends Request implements IHasCountInput, IHa
     public function getRelationsInput()
     {
         $relations = (array) $this->input('relations', []);
-        $post_relations = Product::$relationships;
+        $product_relations = Product::$relationships;
         $result = [];
         foreach ($relations as $value) {
-            if (in_array($value, $post_relations)) {
+            if (in_array($value, $product_relations)) {
                 $result[] = $value;
             }
         }

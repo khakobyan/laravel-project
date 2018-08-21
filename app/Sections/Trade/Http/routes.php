@@ -4,6 +4,10 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
     Route::group(['prefix' => 'products'], function () {
         /* products resource start */
         Route::get('/', 'ProductsController@index');
+        Route::post('/', 'ProductsController@store');
+        Route::get('{id}', 'ProductsController@show');
+        Route::put('{id}', 'ProductsController@update');
+        Route::delete('{id}', 'ProductsController@destroy');
         /* products resource end */
     });
     

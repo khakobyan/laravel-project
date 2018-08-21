@@ -6,7 +6,9 @@ use App\Sections\Users\Contracts\IUserService;
 use App\Models\{
     Post,
     PostComment,
-    User
+    User,
+    Product,
+    ProductComment
 };
 use Auth;
 
@@ -46,6 +48,12 @@ class UserService implements IUserService
                 break;
             case 'post-comment':
                 $item = PostComment::where('id', $inputs['id'])->first();
+                break;
+            case 'product':
+                $item = Product::where('id', $inputs['id'])->first();
+                break;
+            case 'product-comment':
+                $item = ProductComment::where('id', $inputs['id'])->first();
                 break;
         }
 

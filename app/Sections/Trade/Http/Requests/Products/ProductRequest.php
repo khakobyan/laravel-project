@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Users\Http\Requests;
+namespace App\Sections\Trade\Http\Requests\Products;
 
 use App\Http\Requests\Request;
 
-class UserLikeRequest extends Request
+class ProductRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class UserLikeRequest extends Request
     public function rules()
     {
         return [
-            'reaction' => 'required|string|in:like,dislike,unlike,undislike',
-            'id' => 'required|int',
-            'type' => 'required|string|in:post,post-comment,product,product-comment',
+            'title' => 'required|string|max:500',
+            'description' =>'string|max:2000',
+            'price' => 'required|integer',
+            'currency' => 'required|string|in:USD,EUR,AMD',
         ];
     }
     

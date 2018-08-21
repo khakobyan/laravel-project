@@ -3,10 +3,13 @@
 namespace App\Sections\Trade\Http\Controllers;
 
 use App\Sections\Trade\Http\Requests\Products\{
-    ProductIndexRequest
+    ProductIndexRequest,
+    ProductRequest,
+    ProductShowRequest
 };
 use App\Sections\Trade\Http\Responses\Products\{
-    ProductIndexResponse    
+    ProductIndexResponse,
+    ProductResponse    
 };
 use App\Http\Controllers\Controller;
 
@@ -29,66 +32,64 @@ class ProductsController extends Controller
         return new ProductIndexResponse($products);
     }
 
-    // /**
-    //  * Store a newly created post in storage.
-    //  *
-    //  * @param \App\Sections\Posts\Http\Requests\Posts\PostRequest $request
-    //  *
-    //  * @return \Illuminate\Contracts\Support\Responsable
-    //  */
-    // public function store(PostRequest $request)
-    // {
-    //     $postService = app('api.services.posts');
-    //     $inputs = $request->inputs();
-    //     $post = $postService->create($inputs);
-    //     return new PostResponse($post, 201);
-    // }
+    /**
+     * Store a newly created product in storage.
+     *
+     * @param App\Sections\Trade\Http\Requests\Products\ProductRequest $request
+     *
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    public function store(ProductRequest $request)
+    {
+        $productService = app('api.services.products');
+        $inputs = $request->inputs();
+        $product = $productService->create($inputs);
+        return new ProductResponse($product, 201);
+    }
 
-    // /**
-    //  * Get post from storage.
-    //  *
-    //  * @param \App\Sections\Posts\Http\Requests\Posts\PostShowRequest $request
-    //  *
-    //  * @return \Illuminate\Contracts\Support\Responsable
-    //  */
-    // public function show(PostShowRequest $request, $id)
-    // {
-    //     $postService = app('api.services.posts');
-    //     $relations = $request->getRelationsInput();
-    //     $postService->abortIfNotExist($id);
-    //     $post = $postService->get($id, $relations);
-    //     return new PostResponse($post);
-    // }
+    /**
+     * Get product from storage.
+     *
+     * @param App\Sections\Trade\Http\Requests\Products\ProductShowRequest $request
+     *
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    public function show(ProductShowRequest $request, $id)
+    {
+        $productService = app('api.services.products');
+        $relations = $request->getRelationsInput();
+        $productService->abortIfNotExist($id);
+        $product = $productService->get($id, $relations);
+        return new ProductResponse($product);
+    }
 
-    // /**
-    //  * Update the specified post in storage.
-    //  *
-    //  * @param \App\Sections\Posts\Http\Requests\Posts\PostRequest $request
-    //  * @param string $id
-    //  *
-    //  * @return Response
-    //  */
-    // public function update(PostRequest $request, $id)
-    // {
-    //     $postService = app('api.services.posts');
-    //     $postService->abortIfNotExist($id);
-    //     $inputs = $request->inputs();
-    //     $postService->update($id, $inputs);
-    //     return response()->json(null, 204);
-    // }
+    /**
+     * Update the specified product in storage.
+     *
+     * @param App\Sections\Trade\Http\Requests\Products\ProductRequest $request
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function update(ProductRequest $request, $id)
+    {
+        $productService = app('api.services.products');
+        $inputs = $request->inputs();
+        $productService->update($id, $inputs);
+        return response()->json(null, 204);
+    }
 
-    // /**
-    //  * Remove the specified post from storage.
-    //  *
-    //  * @param string $id
-    //  *
-    //  * @return Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     $postService = app('api.services.posts');
-    //     $postService->abortIfNotExist($id);
-    //     $postService->destroy($id);
-    //     return response()->json(null, 204);
-    // }
+    /**
+     * Remove the specified product from storage.
+     *
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $productService = app('api.services.products');
+        $productService->destroy($id);
+        return response()->json(null, 204);
+    }
 }
