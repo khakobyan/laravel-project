@@ -36,7 +36,6 @@ class PostService implements IPostService
      */
     public function create($inputs)
     {
-        $inputs['user_id'] = Auth::id();
         // $res = Post::with('user')->where('id', $post->id)->first();
         return Post::create($inputs); 
     }
@@ -69,8 +68,7 @@ class PostService implements IPostService
     public function update($id, $inputs)
     {
         $post = Post::find($id);
-        $inputs['user_id'] = Auth::id();
-        if ($post && $post->user_id == $inputs['user_id']) {
+        if ($post && $post->user_id == Auth::id()) {
             return $post->update($inputs);
         }
         return false;
@@ -86,8 +84,7 @@ class PostService implements IPostService
     public function destroy($id)
     {
         $post = Post::find($id);
-        $inputs['user_id'] = Auth::id();
-        if ($post && $post->user_id == $inputs['user_id']) {
+        if ($post && $post->user_id == Auth::id()) {
             return $post->delete();
         }
         return false;

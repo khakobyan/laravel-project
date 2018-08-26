@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests\PostComments;
+namespace App\Sections\Trade\Http\Requests\Products;
 
 use App\Http\Requests\Request;
 
-class PostCommentRequest extends Request
+class ProductRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class PostCommentRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'required|string',
-            'post_id' => 'required|int'
+            'title' => 'required|string|max:500',
+            'description' =>'string|max:2000',
+            'price' => 'required|integer',
+            'currency' => 'required|string|in:USD,EUR,AMD',
         ];
     }
     

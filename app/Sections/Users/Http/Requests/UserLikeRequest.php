@@ -26,7 +26,7 @@ class UserLikeRequest extends Request
         return [
             'reaction' => 'required|string|in:like,dislike,unlike,undislike',
             'id' => 'required|int',
-            'type' => 'required|string|in:post,post-comment',
+            'type' => 'required|string|in:post,post-comment,product,product-comment',
         ];
     }
     

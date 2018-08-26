@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Sections\Posts\Http\Requests\PostComments;
+namespace App\Sections\Trade\Http\Requests\ProductComments;
 
 use App\Http\Requests\Request;
 
-class PostCommentRequest extends Request
+class ProductCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class PostCommentRequest extends Request
     {
         return [
             'text' => 'required|string',
-            'post_id' => 'required|int'
+            'product_id' => 'required|int'
         ];
     }
     
