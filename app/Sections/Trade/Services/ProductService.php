@@ -89,7 +89,7 @@ class ProductService implements IProductService
      * @param string $id
      * @param array  $relations
      *
-     * @return \App\Models\Post
+     * @return \App\Models\Product
      */
     public function get($id, $relations = [])
     {

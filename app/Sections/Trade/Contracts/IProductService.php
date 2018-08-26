@@ -12,7 +12,7 @@ interface IProductService
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAll($count = 30, $relations = []);
+    public function getAll($count = 30, $relations = [], $search_inputs = [], $sort_inputs = [], $fields = ['*']);
 
     /**
      * Create new product.
@@ -29,7 +29,7 @@ interface IProductService
      * @param string $id
      * @param array  $relations
      *
-     * @return \App\Models\Post
+     * @return \App\Models\Product
      */
     public function get($id, $relations = []);
     

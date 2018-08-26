@@ -11,11 +11,11 @@ Route::group(['middleware' => ['before' => 'auth:api']], function () {
         /* products resource end */
     });
     
-    // Route::group(['prefix' => 'post-comments'], function () {
-    //     /* post comments resource start */
-    //     Route::post('/', 'PostCommentsController@store');
-    //     Route::put('{id}', 'PostCommentsController@update');
-    //     Route::delete('{id}', 'PostCommentsController@destroy');
-    //     /* post comments resource end */
-    // });
+    Route::group(['prefix' => 'product-comments'], function () {
+        /* product comments resource start */
+        Route::post('/', 'ProductCommentsController@store');
+        Route::put('{id}', 'ProductCommentsController@update');
+        Route::delete('{id}', 'ProductCommentsController@destroy');
+        /* product comments resource end */
+    });
 });

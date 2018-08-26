@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cog\Contracts\Love\Likeable\Models\Likeable as LikeableContract;
 use Cog\Laravel\Love\Likeable\Models\Traits\Likeable;
 
-class ProductComment extends Model
+class ProductComment extends Model implements LikeableContract
 {
     use Likeable;
 
