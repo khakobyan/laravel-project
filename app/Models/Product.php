@@ -31,6 +31,9 @@ class Product extends Model implements LikeableContract
         'related_data',
         'price',
         'currency',
+        'type',
+        'subtype',
+        'active',
     ];
 
     public function user() { return $this->belongsTo(User::class); }

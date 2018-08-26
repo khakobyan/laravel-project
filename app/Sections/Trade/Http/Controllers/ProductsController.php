@@ -25,9 +25,11 @@ class ProductsController extends Controller
     public function index(ProductIndexRequest $request)
     {
         $productService = app('api.services.products');
-        $count = $request->getCountInput();
+        $count = $request->getCountInput(true);
         $relations = $request->getRelationsInput();
-        $products = $productService->getAll($count, $relations);
+        $query = $request->getQueryInput();
+        $sort_by = $request->getSortByInput();
+        $products = $productService->getAll($count, $relations, $query, $sort_by);
         
         return new ProductIndexResponse($products);
     }

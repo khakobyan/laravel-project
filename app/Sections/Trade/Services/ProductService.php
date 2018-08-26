@@ -7,6 +7,7 @@ use App\Models\{
     Product
 };
 use Auth;
+use Carbon\Carbon;
 
 class ProductService implements IProductService
 {
@@ -18,13 +19,56 @@ class ProductService implements IProductService
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAll($count = 30, $relations = [])
+    public function getAll($count = 30, $relations = [], $search_inputs = [], $sort_inputs = [], $fields = ['*'])
     {
         $query = Product::query();
         if (!empty($relations)) {
             $query->with($relations);
         }
-        return $query->orderBy('id')->paginate($count);
+        foreach ($search_inputs as $input) {
+            $value = $input['value'];
+            $field = $input['field'];
+            switch ($field) {
+                case 'status':
+                    if ('active' === (string) $value) {
+                        $query = $query->where('active', 1);
+                    } elseif ('inactive' === (string) $value) {
+                        $query = $query->where('active', 0);
+                    }
+                    break;
+                case 'type':
+                case 'user_id':
+                    $query = $query->{$input['type']}($field, $value);
+                    break;
+                case 'price_from':
+                    $query = $query->where('price', '>=', $value);
+                    break;
+                case 'price_to':
+                    $query = $query->where('price', '<=', $value);
+                    break;    
+                case 'time_from':
+                    //remember to think about other timezones
+                    $value = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+                    $value = $value->tz('UTC')->__toString();
+                    $query = $query->where('created_at', '>=', $value);
+                    break;
+                case 'time_to':
+                    //remember to think about other timezones
+                    $value = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+                    $value = $value->tz('UTC')->__toString();
+                    $query = $query->where('created_at', '<=', $value);
+                    break;
+                case 'search':
+                    $query = $query->where(function ($q) use ($value) {
+                        return $q->where('title', 'like', "%{$value}%")
+                            ->orWhere('description', 'like', "%{$value}%");
+                    });
+                    break;
+            }
+        }
+        $query = $query->orderBy($sort_inputs['field'], $sort_inputs['type']);
+       
+        return $query->paginate($count);
     }
 
     /**

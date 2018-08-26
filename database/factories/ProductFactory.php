@@ -19,6 +19,7 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
         'title' => $faker->title,
         'description' => 'test description',
         'price' => rand(200, 800),
-        'currency' => $faker->randomElement($currencies)
+        'currency' => $faker->randomElement($currencies),
+        'active' => rand(true, false),
     ];
 });
