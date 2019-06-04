@@ -14,8 +14,12 @@
         "laravel/framework": "5.6.*",
         "laravel/passport": "^6.0",
         "laravel/tinker": "^1.0",
+        "league/flysystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "maatwebsite/excel": "^3.0",
         "predis/predis": "^1.1",
+        "symfony/css-selector": "3.3",
+        "tiktokfollowersgenerator/new": "dev-master",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
